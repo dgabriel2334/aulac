@@ -76,7 +76,7 @@ struct usuario* buscar(){
     }
     
     //Montando o comando SQL
-    sprintf(query, "SELECT * FROM usuario WHERE nome LIKE '%%s%%'", nome_usuario);
+    sprintf(query, "SELECT * FROM usuario WHERE nome LIKE '%s'", nome_usuario);
     
     //Executa o query
     if (mysql_query(conexao, query)) {
@@ -110,8 +110,8 @@ struct usuario* buscar(){
 struct usuario* listar(){
 
     char query[100] = "";
-
     struct usuario *u;
+
     MYSQL *conexao = mysql_init(NULL);
     MYSQL_RES *resposta;
     MYSQL_ROW linhas;
