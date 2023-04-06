@@ -136,7 +136,7 @@ struct usuario* listar(){
         printf("|id|nome|\n");
         printf("-------------------------------------\n");
 
-        while((linhas = mysql_fetch_row(resposta))) {
+        while ((linhas = mysql_fetch_row(resposta))) {
             u->id = atoi (linhas[0]);
             strcpy(u->nome, linhas[1]);
             printf("|%d|", u->id);
