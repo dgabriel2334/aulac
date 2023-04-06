@@ -30,7 +30,7 @@ struct usuario {
 void inserir() {
     char nome_usuario[100];
 
-    printf("Digite o nome para o usuario: ");
+    printf("Digite o nome para o usuario (sem espacos): ");
     scanf("%s", nome_usuario);
 
     char query[200] = "";
