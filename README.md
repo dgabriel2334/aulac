@@ -1,5 +1,7 @@
 ## TRABALHO PARA DISCIPLINA DE PROGRAMAÇÃO DE SOFTWARE BÁSICO EM C
 
+### Feito para a disciplina do melhor prof da ESTÁCIO-AM: Francisco Sousa Neto
+
 ### Este trabalho consiste em criar um CRUD com conexão ao banco de dados MYSQL utilizando a linguagem C
 #
 ### Manual de instalação ###
