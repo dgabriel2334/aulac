@@ -20,8 +20,3 @@ COPY principal.c /aulac/
 RUN gcc -o crud principal.c `mysql_config --cflags --libs`
 
 ENTRYPOINT ["tail", "-f", "/dev/null"]
-CMD ["-f","/dev/null"]
-
-
-
-# RUN gcc -o teste principal.c
