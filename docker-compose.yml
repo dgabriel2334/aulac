@@ -21,7 +21,7 @@ services:
     container_name: mysql
     command: mysqld --sql_mode=""
     environment:
-      MYSQL_ROOT_PASSWORD: cdwq8i9o
+      MYSQL_ROOT_PASSWORD: 123456
       MYSQL_DATABASE: crud
 
     volumes:

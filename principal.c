@@ -1,3 +1,21 @@
+/**
+-**************************FEITO POR:**********************-
+-*              Gabriel Santos - Vulgo: @gabi             *-
+-*            Modificado em: 06/04/2023 às 16:10          *-
+-*    Com grandes poderes vem grandes responsabilidades   *-
+-**********************************************************-
+-*           Me contate no WhatsApp pelos números:        *-
+-*             (11) 91092-1684 | (92) 98128-5787          *-
+-**********************************************************-
+-*                    Me contate por email:               *-
+-*                 dariogabriel2334@gmail.com             *-
+-**********************************************************-
+-*             Faça uma doação voluntária via PIX         *-
+-*                   Celular: (11) 91092-1684             *-
+-*                      CPF: 007.284.902-93               *-
+-**********************************************************-
+*/
+
 #include <stdio.h>
 #include <string.h>
 #include <mysql/mysql.h>
@@ -18,7 +36,7 @@ void inserir() {
     char query[200] = "";
     //Conexão com o banco de dados
     MYSQL *conexao = mysql_init(NULL);
-    if (!mysql_real_connect(conexao, "db", "root", "cdwq8i9o", "crud", 0, NULL, 0)) {
+    if (!mysql_real_connect(conexao, "db", "root", "123456", "crud", 0, NULL, 0)) {
         printf("Erro: %s\n", mysql_error(conexao));
     }
 
@@ -49,7 +67,7 @@ struct usuario* buscar(){
     scanf("%s", nome_usuario);
 
     MYSQL *conexao = mysql_init(NULL);
-    if (!mysql_real_connect(conexao, "db", "root", "cdwq8i9o", "crud", 0, NULL, 0)) {
+    if (!mysql_real_connect(conexao, "db", "root", "123456", "crud", 0, NULL, 0)) {
         printf("Erro: %s\n", mysql_error(conexao));
     }
         
@@ -98,7 +116,7 @@ struct usuario* listar(){
     u = (struct usuario*) malloc(sizeof(struct usuario));
 
     MYSQL *conexao = mysql_init(NULL);
-    if (!mysql_real_connect(conexao, "db", "root", "cdwq8i9o", "crud", 0, NULL, 0)) {
+    if (!mysql_real_connect(conexao, "db", "root", "123456", "crud", 0, NULL, 0)) {
         printf("Erro: %s\n", mysql_error(conexao));
     }
         
@@ -153,7 +171,7 @@ void alterar(){
 
     //Conexão com o banco de dados
     MYSQL *conexao = mysql_init(NULL);
-    if (!mysql_real_connect(conexao, "db", "root", "cdwq8i9o", "crud", 0, NULL, 0)) {
+    if (!mysql_real_connect(conexao, "db", "root", "123456", "crud", 0, NULL, 0)) {
             printf("Erro: %s\n", mysql_error(conexao));
     }
         
@@ -181,7 +199,7 @@ void remover(){
     scanf("%d", &id_usuario);
     //Conexão com o banco de dados
     MYSQL *conexao = mysql_init(NULL);
-    if (!mysql_real_connect(conexao, "db", "root", "cdwq8i9o", "crud", 0, NULL, 0)) {
+    if (!mysql_real_connect(conexao, "db", "root", "123456", "crud", 0, NULL, 0)) {
         printf("Erro: %s\n", mysql_error(conexao));
     }
         
