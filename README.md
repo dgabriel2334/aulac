@@ -28,8 +28,6 @@ Código totalmente aberto a vocês!
 
 -*              Gabriel Santos - Vulgo: @gabi             *-
 
-<br>
--*            Modificado em: 06/04/2023 às 16:10          *-
 
 <br>
 -*    Com grandes poderes vem grandes responsabilidades   *-
