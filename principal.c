@@ -29,13 +29,14 @@ struct usuario {
 
 void inserir() {
     char nome_usuario[100];
+    char query[200] = "";
+
+    MYSQL *conexao = mysql_init(NULL);
 
     printf("Digite o nome para o usuario (sem espacos): ");
     scanf("%s", nome_usuario);
 
-    char query[200] = "";
     //Conexão com o banco de dados
-    MYSQL *conexao = mysql_init(NULL);
     if (!mysql_real_connect(conexao, "db", "root", "123456", "crud", 0, NULL, 0)) {
         printf("Erro: %s\n", mysql_error(conexao));
     }
@@ -44,12 +45,11 @@ void inserir() {
     sprintf(query, "INSERT INTO usuario VALUES (NULL, '%s')", nome_usuario);
 
     //Executa o query
-    if (mysql_query(conexao, query) ) {
-
-    printf("Erro: %s\n", mysql_error(conexao));
-
-    } else
-    printf("Usuário inserido com sucesso!\n");
+    if (mysql_query(conexao, query)) {
+        printf("Erro: %s\n", mysql_error(conexao));
+    } else {
+        printf("Usuário inserido com sucesso!\n");
+    }
 
     mysql_close(conexao);
     menu();
@@ -58,8 +58,12 @@ void inserir() {
 struct usuario* buscar(){
 
     char nome_usuario[50];
+    char query[100] = "";
     int resultados;
     struct usuario *u;
+    
+    MYSQL_RES *resposta;
+    MYSQL_ROW linhas;
 
     u = (struct usuario*) malloc(sizeof(struct usuario));
 
@@ -70,38 +74,31 @@ struct usuario* buscar(){
     if (!mysql_real_connect(conexao, "db", "root", "123456", "crud", 0, NULL, 0)) {
         printf("Erro: %s\n", mysql_error(conexao));
     }
-        
-    char query[100] = "";
-    MYSQL_RES *resposta;
-    MYSQL_ROW linhas;
     
     //Montando o comando SQL
     sprintf(query, "SELECT * FROM usuario WHERE nome LIKE '%%s%%'", nome_usuario);
     
     //Executa o query
-    if (mysql_query(conexao, query) ) {
+    if (mysql_query(conexao, query)) {
         printf("Erro: %s\n", mysql_error(conexao));
     } else {    
-
         resposta = mysql_store_result(conexao);
         resultados = mysql_num_rows(resposta);
 
         if (resultados < 1) {
             printf("\nO usuario: %s nao foi encontrado", nome_usuario);
         } else {
-            //Recebe o resultado da query
-            //Recebe uma linha do resultado da query
-            
             printf("-------------------------------------\n");
             printf("|id|nome|\n");
             printf("-------------------------------------\n");
-            while((linhas = mysql_fetch_row(resposta)))
-            {
+
+            while((linhas = mysql_fetch_row(resposta))) {
                 u->id = atoi (linhas[0]);
                 strcpy(u->nome, linhas[1]);
                 printf("|%d|", u->id);
                 printf("%s\n", u->nome);
             }
+
             printf("\nTOTAL DE RESULTADOS ENCONTRADOS %d", resultados);
         }
     }
@@ -112,35 +109,34 @@ struct usuario* buscar(){
 
 struct usuario* listar(){
 
-    struct usuario *u;
-    u = (struct usuario*) malloc(sizeof(struct usuario));
-
-    MYSQL *conexao = mysql_init(NULL);
-    if (!mysql_real_connect(conexao, "db", "root", "123456", "crud", 0, NULL, 0)) {
-        printf("Erro: %s\n", mysql_error(conexao));
-    }
-        
     char query[100] = "";
+
+    struct usuario *u;
+    MYSQL *conexao = mysql_init(NULL);
     MYSQL_RES *resposta;
     MYSQL_ROW linhas;
     
+    u = (struct usuario*) malloc(sizeof(struct usuario));
+
+    if (!mysql_real_connect(conexao, "db", "root", "123456", "crud", 0, NULL, 0)) {
+        printf("Erro: %s\n", mysql_error(conexao));
+    }
+            
     //Montando o comando SQL
     sprintf(query, "SELECT * FROM usuario");
     
     //Executa o query
-    if (mysql_query(conexao, query) ) {
+    if (mysql_query(conexao, query)) {
         printf("Erro: %s\n", mysql_error(conexao));
     } else {    
-        
         //Recebe o resultado da query
         resposta = mysql_store_result(conexao);
-        //Recebe uma linha do resultado da query
         
         printf("-------------------------------------\n");
         printf("|id|nome|\n");
         printf("-------------------------------------\n");
-        while((linhas = mysql_fetch_row(resposta)))
-        {
+
+        while((linhas = mysql_fetch_row(resposta))) {
             u->id = atoi (linhas[0]);
             strcpy(u->nome, linhas[1]);
             printf("|%d|", u->id);
@@ -152,12 +148,13 @@ struct usuario* listar(){
     menu();
 }
 
-void alterar(){
+int alterar()
+{
     int id_usuario;
     char nome_usuario[50];
     char query[100] = "";
-
     struct usuario *usuario;
+
     usuario = (struct usuario*) malloc(sizeof(struct usuario));
 
     printf("Digite o id do usuario a ser editado: ");
@@ -167,12 +164,14 @@ void alterar(){
     scanf("%s", nome_usuario);
 
     usuario->id = id_usuario;
+
     strcpy(usuario->nome, nome_usuario);
 
     //Conexão com o banco de dados
     MYSQL *conexao = mysql_init(NULL);
+
     if (!mysql_real_connect(conexao, "db", "root", "123456", "crud", 0, NULL, 0)) {
-            printf("Erro: %s\n", mysql_error(conexao));
+        printf("Erro: %s\n", mysql_error(conexao));
     }
         
     //Montando o comando SQL
@@ -180,18 +179,19 @@ void alterar(){
     
     //Executa o query
     if (mysql_query(conexao, query) ) {
-        
         printf("Erro: %s\n", mysql_error(conexao));
-        
-    } else
+    } else {
         printf("Usuário alterado com sucesso!\n");
-        
+    }
+
     mysql_close(conexao);
     menu();
 
+    return 1;
 }
 
-void remover(){
+int remover()
+{
     int id_usuario;
     char query[100] = "";
 
@@ -211,29 +211,31 @@ void remover(){
         
         printf("Erro: %s\n", mysql_error(conexao));
         
-    } else
+    } else {
         printf("Usuário removido com sucesso!\n");
-        
+    }
+
     mysql_close(conexao);
     menu();
+    return 1;
 }
 
-int menu(){
+int menu()
+{
     int i;
     int opcao;
 
-    for (int i = 0; i < 2; i++)
-    {
+    for (int i = 0; i < 2; i++) {
         printf("\n");
     }
+
     printf("***********************************************************\n");
     printf("###########################################################\n");
     printf("################### BEM VINDO AO CRUD #####################\n");
     printf("###########################################################\n");
     printf("***********************************************************\n");
 
-    for (int i = 0; i < 3; i++)
-    {
+    for (int i = 0; i < 3; i++) {
         printf("\n");
     }
 
@@ -251,8 +253,7 @@ int menu(){
         return 1;
     }
 
-    switch (opcao)
-    {
+    switch (opcao) {
         case 1:
             inserir();
             break;
@@ -274,10 +275,10 @@ int menu(){
     }
     
     return 1;
-    
 }
 
-int main() {
+int main() 
+{
     menu();
     return 0;
 }
