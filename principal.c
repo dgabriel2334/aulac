@@ -27,7 +27,8 @@ struct usuario {
    char nome[50];
 };
 
-void inserir() {
+void inserir() 
+{
     char nome_usuario[100];
     char query[200] = "";
 
@@ -55,8 +56,8 @@ void inserir() {
     menu();
 }
 
-struct usuario* buscar(){
-
+struct usuario* buscar()
+{
     char nome_usuario[50];
     char query[100] = "";
     int resultados;
@@ -107,8 +108,8 @@ struct usuario* buscar(){
     menu();
 }
 
-struct usuario* listar(){
-
+struct usuario* listar()
+{
     char query[100] = "";
     struct usuario *u;
 
