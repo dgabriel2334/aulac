@@ -7,7 +7,6 @@ RUN apt update && apt upgrade -y
 # INSTALANDO O QUE É NECESSÁRIO NESSA MÁQUINA LINUX
 RUN apt install -y \
     nano \
-    mariadb-server \
     build-essential \
     manpages-dev \
     libmysqlclient-dev
