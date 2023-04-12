@@ -8,7 +8,7 @@
 
 1. Certifique-se de ter o docker instalado em sua máquina;
 2. Abra uma janela do terminal dentro da pasta raiz do projeto;
-3. Execute o comando: "$ docker compose up -d --build";
+3. Execute o comando: "$ docker-compose up -d --build";
 4. Acesse o sistema utilizando o comando "$ docker exec -it aulac ./crud";
 
 ###### Observações
