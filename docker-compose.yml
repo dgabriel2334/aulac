@@ -11,6 +11,8 @@ services:
   aulac:
     build: .
     container_name: aulac
+    volumes:
+      - .:/aulac
     ports:
       - 8000:80
 
@@ -23,7 +25,6 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: 123456
       MYSQL_DATABASE: crud
-
     volumes:
       - ./crud.sql:/docker-entrypoint-initdb.d/crud.sql
 
