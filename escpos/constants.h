@@ -5,6 +5,7 @@ static const char *ESCPOS_CMD_INIT = "\x1b\x40";
 static const char *ESCPOS_CMD_PRINT_RASTER_BIT_IMAGE = "\x1d\x76\x30\x00";
 static const char *ESCPOS_CMD_CUT = "\x1d\x56\x42";
 static const char *ESCPOS_CMD_FEED = "\x1b\x64";
+static const char *ESCPOS_CMD_TEXT = "\x1b\x74\x00\x1b\x21\x00%s\x0a";
 
 // The maximum width of image the printer can accept
 static const int ESCPOS_MAX_DOT_WIDTH = 576;
