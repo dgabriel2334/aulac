@@ -15,6 +15,12 @@ RUN mkdir aulac
 
 WORKDIR /aulac
 
+COPY escpos/dist/libescposprinter.a /usr/local/lib/
+
+COPY escpos/. /usr/local/include/
+
+RUN export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+
 COPY principal.c /aulac/
 RUN gcc -o crud principal.c `mysql_config --cflags --libs`
 
