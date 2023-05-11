@@ -291,7 +291,8 @@ int imprimir(Produto produtos[], int qtd)
     escpos_printer_text(printer, "------------------------\n", 4, 8, 0);
     int j;
     for (j = 0; j < qtd; j++) {
-        snprintf(str, 100, "%d   %s         %d %.2f   %.2f\n", j+1, produtos[j].nome, 1, produtos[j].preco, produtos[j].preco);
+        // snprintf(str, 100, "%d   %s         %d %.2f   %.2f\n", j+1, produtos[j].nome, 1, produtos[j].preco, produtos[j].preco);
+        snprintf(str, 100, "%d   %-12s %d %.2f    %.2f\n", j+1, produtos[j].nome, 1, produtos[j].preco, produtos[j].preco);
         escpos_printer_text(printer, str, 1, 1, 0);
         memset(str, 0, sizeof(str));
         total = total + produtos[j].preco;
