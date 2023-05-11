@@ -21,7 +21,7 @@
 MYSQL *conn;
 
 typedef struct produto {
-    int codigo;
+    char codigo[50];
     char nome[50];
     float preco;
 } Produto;
@@ -151,7 +151,7 @@ void cadastrar_produto() {
     printf("\n--- Cadastro de Produto ---\n");
 
     printf("Código: ");
-    scanf("%d", &p.codigo);
+    scanf("%s", p.codigo);
 
     printf("Nome: ");
     scanf(" %[^\n]s", p.nome);
@@ -159,7 +159,7 @@ void cadastrar_produto() {
     printf("Preço: R$ ");
     scanf("%f", &p.preco);
     char query[200] = "";
-    sprintf(query, "INSERT INTO produtos (id, codigo, nome, preco) VALUES (NULL, %d, '%s', %.2f)", p.codigo, p.nome, p.preco);
+    sprintf(query, "INSERT INTO produtos (id, codigo, nome, preco) VALUES (NULL, %s, '%s', %.2f)", p.codigo, p.nome, p.preco);
 
     if (mysql_query(conexao, query)) {
         printf("Erro: %s\n", mysql_error(conexao));
@@ -195,7 +195,8 @@ void listar_produtos() {
 
 void realizar_venda() {
     Produto produtos[100];
-    int codigo, quantidade;
+    int quantidade;
+    char codigo[50];
     float total = 0;
     int i = 0;
 
@@ -208,14 +209,14 @@ void realizar_venda() {
 
     while (1) {
         printf("Digite o código do produto (0 para finalizar a venda): ");
-        scanf("%d", &codigo);
+        scanf("%s", codigo);
 
-        if (codigo == 0) {
+        if (strcmp(codigo, "0") == 0) {
             break;
         }
 
         char query[100];
-        sprintf(query, "SELECT nome, preco, codigo FROM produtos WHERE codigo=%d", codigo);
+        sprintf(query, "SELECT nome, preco, codigo FROM produtos WHERE codigo=%s", codigo);
 
         if (mysql_query(conn, query)) {
             fprintf(stderr, "%s\n", mysql_error(conn));
@@ -231,7 +232,8 @@ void realizar_venda() {
             continue;
         }
 
-        produtos[i].codigo = atoi(row[3]);
+        // produtos[i].codigo = atoi(row[3]);
+        strcpy(produtos[i].codigo, row[3]);
         strcpy(produtos[i].nome, row[0]);
         produtos[i].preco = atof(row[1]);
         i++;
@@ -287,12 +289,12 @@ int imprimir(Produto produtos[], int qtd)
     escpos_printer_text(printer, "------------------------\n", 4, 8, 0);
     escpos_printer_text(printer, "-- LISTA DE PRODUTOS --\n", 4, 8, 0);
     escpos_printer_text(printer, "------------------------\n", 4, 8, 0);
-    escpos_printer_text(printer, "#   Desc      Qtd VlUnt.Subtotal\n", 1, 1, 0);
+    escpos_printer_text(printer, "# Desc        Qtd VlUnt.Subtotal\n", 1, 1, 0);
     escpos_printer_text(printer, "------------------------\n", 4, 8, 0);
     int j;
     for (j = 0; j < qtd; j++) {
         // snprintf(str, 100, "%d   %s         %d %.2f   %.2f\n", j+1, produtos[j].nome, 1, produtos[j].preco, produtos[j].preco);
-        snprintf(str, 100, "%d   %-12s %d %.2f    %.2f\n", j+1, produtos[j].nome, 1, produtos[j].preco, produtos[j].preco);
+        snprintf(str, 100, "%d %-12s %d %.2f    %.2f\n", j+1, produtos[j].nome, 1, produtos[j].preco, produtos[j].preco);
         escpos_printer_text(printer, str, 1, 1, 0);
         memset(str, 0, sizeof(str));
         total = total + produtos[j].preco;
@@ -305,6 +307,10 @@ int imprimir(Produto produtos[], int qtd)
     snprintf(strTotal, 100, "TOTAL: %.2f\n", total);
     escpos_printer_text(printer, "------------------------\n", 4, 8, 0);
     escpos_printer_text(printer, strTotal, 4, 8, 1);
+    escpos_printer_text(printer, "------------------------\n", 4, 8, 0);
+    escpos_printer_text(printer, "Sem valor fiscal\n", 1, 1, 1);
+    escpos_printer_text(printer, "------------------------\n", 4, 8, 0);
+    escpos_printer_text(printer, "Volte sempre ;)\n", 1, 1, 1);
     escpos_printer_text(printer, "------------------------\n", 4, 8, 0);
     escpos_printer_feed(printer, 7);
     escpos_printer_cut(printer, 3);
