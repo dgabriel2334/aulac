@@ -233,7 +233,7 @@ void realizar_venda() {
         }
 
         // produtos[i].codigo = atoi(row[3]);
-        strcpy(produtos[i].codigo, row[3]);
+        strcpy(produtos[i].codigo, row[2]);
         strcpy(produtos[i].nome, row[0]);
         produtos[i].preco = atof(row[1]);
         i++;
