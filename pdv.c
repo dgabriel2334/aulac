@@ -314,6 +314,7 @@ int imprimir(Produto produtos[], int qtd)
     escpos_printer_text(printer, "------------------------\n", 4, 8, 0);
     escpos_printer_feed(printer, 7);
     escpos_printer_cut(printer, 3);
+    escpos_printer_destroy(printer);
 }
 
 int main()
