@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <string.h>
-#include <mysql/mysql.h>
 #include <stdlib.h>
 #include <assert.h>
 #include <arpa/inet.h>
@@ -8,6 +7,7 @@
 #include <unistd.h>
 #include <time.h>
 
+#include <mysql/mysql.h>
 #include "serial.h"
 #include "printer.h"
 #include "error_private.h"
